@@ -1,0 +1,67 @@
+{
+  "title": "Get Members",
+  "name": "getmembers",
+  "version": "1.0.0",
+  "description": "Fetch all the members of all the specified github organisations with their complete details",
+  "homepage": "https://github.com/bevry/getcontributors",
+  "license": {
+    "type": "MIT"
+  },
+  "badges": {
+    "travis": true,
+    "npm": true,
+    "david": true,
+    "daviddev": true,
+    "gittip": "bevry",
+    "flattr": "344188/balupton-on-Flattr",
+    "paypal": "QB8GQPZAH84N6",
+    "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a",
+    "wishlist": "http://amzn.com/w/2F8TXKSNAFG4V"
+  },
+  "keywords": [
+    "members",
+    "package.json",
+    "github",
+    "organisation",
+    "organization",
+    "users",
+    "owners",
+    "maintainers"
+  ],
+  "author": "2014+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
+  "maintainers": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ],
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/bevry/getmembers/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bevry/getmembers.git"
+  },
+  "engines": {
+    "node": ">=0.4"
+  },
+  "dependencies": {
+    "extendr": "~2.1.0",
+    "taskgroup": "~3.3.2",
+    "typechecker": "~2.0.8",
+    "feedr": "~2.7.5",
+    "extract-opts": "~2.2.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.7.1",
+    "joe": "~1.4.0",
+    "joe-reporter-console": "~1.2.1",
+    "chai": "~1.9.1",
+    "projectz": "~0.3.11"
+  },
+  "directories": {
+    "lib": "./out/lib"
+  },
+  "scripts": {
+    "test": "node ./out/test/getmembers-test.js"
+  },
+  "main": "./out/lib/getmembers.js"
+}
