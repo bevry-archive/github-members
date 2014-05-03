@@ -49,13 +49,13 @@ var getter = require('getmembers').create({
 	log: console.log           // optional, arguments: level, message... 
 });
 
-// Fetch all the contributors on these github repositories
-getter.fetchMembersFromOrgs(['bevry'], function(err, contributors){
+// Fetch all the members on these github orgs
+getter.fetchMembersFromOrgs(['bevry'], function(err, members){
 	// Fetch the direct results
-	console.log(err, contributors);
+	console.log(err, members);
 
 	// Get the combined listing
-	console.log(getter.getContributors());
+	console.log(getter.getMembers());
 });
 ```
 
