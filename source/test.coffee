@@ -1,16 +1,14 @@
 # Import
 {expect} = require('chai')
-joe = require('joe')
+kava = require('kava')
 
 # Test
-joe.suite 'getmembers', (suite,test) ->
+kava.suite 'getmembers', (suite,test) ->
 	getter = null
 
 	# Create our contributors instance
 	test 'create', ->
-		getter = require('../../').create(
-			#log: console.log
-		)
+		getter = require('./').create()
 
 	# Fetch all the contributors on these github
 	suite 'members', (suite,test) ->

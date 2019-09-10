@@ -2,7 +2,8 @@
 typeChecker = require('typechecker')
 extendr = require('extendr')
 {TaskGroup} = require('taskgroup')
-extractOpts = require('extract-opts').extractOpts
+extractOptsAndCallback = require('extract-opts')
+githubAuthQueryString = require('githubauthquerystring').fetch()
 
 # Getter
 class Getter
@@ -15,19 +16,10 @@ class Getter
 
 	# Constructor
 	# Create a new members instance
-	# opts={githubClientId, githubClientSecret} - also forwarded onto feedr
 	constructor: (opts={}) ->
 		# Prepare
-		@config = {}
-		@membersMap = {}
-
-		# Extend configuration
-		extendr.extend(@config, opts)
-
-		# Try env for github credentials
-		@config.githubClientId ?= process.env.GITHUB_CLIENT_ID or null
-		@config.githubClientSecret ?= process.env.GITHUB_CLIENT_SECRET or null
-		@config.githubAuthString = "client_id=#{@config.githubClientId}&client_secret=#{@config.githubClientSecret}"
+		@membersMap ?= {}
+		@config ?= opts
 
 		# Feedr
 		@feedr = new (require('feedr').Feedr)(@config)
@@ -58,7 +50,7 @@ class Getter
 		existingMemberData = @membersMap[memberData.id] ?= {}
 
 		# Merge memberData into the existingMemberData
-		extendr.safeDeepExtendPlainObjects(existingMemberData, memberData)
+		extendr.deepDefaults(existingMemberData, memberData)
 
 		# Update references in database
 		@membersMap[memberData.id] = existingMemberData
@@ -70,7 +62,7 @@ class Getter
 	# Clone Member
 	cloneMember: (member) ->
 		# Clone
-		memberData = extendr.safeDeepExtendPlainObjects({
+		memberData = extendr.deepDefaults({
 			name: null
 			email: null
 			url: null
@@ -174,12 +166,12 @@ class Getter
 	# return @
 	fetchMembersFromOrgs: (orgs, opts={}, next) ->
 		# Prepare
-		[opts, next] = extractOpts(opts, next)
+		[opts, next] = extractOptsAndCallback(opts, next)
 
 		# Prepare
 		me = @
 		result = []
-		tasks = new TaskGroup().setConfig(concurrency:0).once 'complete', (err) ->
+		tasks = TaskGroup.create({concurrency:0}).done (err) ->
 			return next(err, [])  if err
 			result = me.getMembers(result)
 			return next(null, result)
@@ -207,22 +199,18 @@ class Getter
 	# return @
 	fetchMembersFromOrg: (org, opts={}, next) ->
 		# Prepare
-		[opts, next] = extractOpts(opts, next)
+		[opts, next] = extractOptsAndCallback(opts, next)
 		opts.profile ?= true
 
 		# Prepare
 		me = @
 		feedr = @feedr
-		{githubAuthString} = @config
-		feedOptions =
-			url: "https://api.github.com/orgs/#{org}/public_members?per_page=100&#{githubAuthString}"
-			parse: 'json'
 
 		# Log
 		@log 'debug', 'Get members from org:', org
 
 		# Fetch the org's users
-		feedr.readFeed feedOptions, opts, (err,users) ->
+		feedr.readFeed "https://api.github.com/orgs/#{org}/public_members?per_page=100&#{githubAuthQueryString}", Object.assign({parse:'json', opts}), (err,users) ->
 			# Check
 			return next(err, [])  if err
 			return next(null, [])  unless users?.length
@@ -231,7 +219,7 @@ class Getter
 			addedUsers = []
 
 			# Add the tasks for fetching their full data
-			tasks = new TaskGroup().setConfig(concurrency:0).once 'complete', (err) ->
+			tasks = TaskGroup.create({concurrency:0}).done (err) ->
 				return next(err, [])  if err
 				return next(null, addedUsers)
 
@@ -254,7 +242,7 @@ class Getter
 				# Fetch profile if it hasn't been fetched already
 				unless addedUser.profile
 					tasks.addTask (complete) ->
-						feedr.readFeed {url: user.url+"?#{githubAuthString}", parse:'json'}, opts, (err, profile) ->
+						feedr.readFeed user.url+"?#{githubAuthQueryString}", Object.assign({parse:'json'}, opts), (err, profile) ->
 							# Check
 							return complete(err)  if err
 

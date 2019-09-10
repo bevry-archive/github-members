@@ -3,21 +3,8 @@
   "name": "getmembers",
   "version": "1.0.0",
   "description": "Fetch all the members of all the specified github organisations with their complete details",
-  "homepage": "https://github.com/bevry/getcontributors",
-  "license": {
-    "type": "MIT"
-  },
-  "badges": {
-    "travis": true,
-    "npm": true,
-    "david": true,
-    "daviddev": true,
-    "gittip": "bevry",
-    "flattr": "344188/balupton-on-Flattr",
-    "paypal": "QB8GQPZAH84N6",
-    "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a",
-    "wishlist": "http://amzn.com/w/2F8TXKSNAFG4V"
-  },
+  "homepage": "https://github.com/bevry/getmembers",
+  "license": "MIT",
   "keywords": [
     "members",
     "package.json",
@@ -28,40 +15,117 @@
     "owners",
     "maintainers"
   ],
+  "badges": {
+    "list": [
+      "travisci",
+      "npmversion",
+      "npmdownloads",
+      "daviddm",
+      "daviddmdev",
+      "---",
+      "patreon",
+      "flattr",
+      "liberapay",
+      "thanksapp",
+      "boostlab",
+      "buymeacoffee",
+      "opencollective",
+      "crypto",
+      "paypal",
+      "wishlist"
+    ],
+    "config": {
+      "buymeacoffeeUsername": "balupton",
+      "cryptoURL": "https://bevry.me/crypto",
+      "flattrUsername": "balupton",
+      "liberapayUsername": "bevry",
+      "opencollectiveUsername": "bevry",
+      "patreonUsername": "bevry",
+      "paypalURL": "https://bevry.me/paypal",
+      "wishlistURL": "https://bevry.me/wishlist"
+    }
+  },
   "author": "2014+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
   "maintainers": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
   ],
-  "contributors": [],
   "bugs": {
     "url": "https://github.com/bevry/getmembers/issues"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/bevry/getmembers.git"
+    "url": "https://github.com/bevry/getmembers.git"
   },
   "engines": {
-    "node": ">=0.4"
+    "node": ">=8"
   },
+  "editions": [
+    {
+      "description": "coffeescript source code with require for modules",
+      "directory": "source",
+      "entry": "index.coffee",
+      "tags": [
+        "coffeescript",
+        "require"
+      ],
+      "engines": false
+    },
+    {
+      "description": "coffeescript compiled for node.js with require for modules",
+      "directory": "edition-esnext",
+      "entry": "index.js",
+      "tags": [
+        "javascript",
+        "esnext",
+        "require"
+      ],
+      "engines": {
+        "node": "8 || 10 || 11 || 12",
+        "browsers": false
+      }
+    }
+  ],
+  "main": "edition-esnext/index.js",
   "dependencies": {
-    "extendr": "~2.1.0",
-    "taskgroup": "~3.3.2",
-    "typechecker": "~2.0.8",
-    "feedr": "~2.7.5",
-    "extract-opts": "~2.2.0"
+    "extendr": "^3.4.1",
+    "extract-opts": "~3.3.1",
+    "feedr": "~3.0.0",
+    "githubauthquerystring": "^1.0.2",
+    "taskgroup": "~5.3.0",
+    "typechecker": "~4.7.0"
   },
   "devDependencies": {
-    "coffee-script": "~1.7.1",
-    "joe": "~1.4.0",
-    "joe-reporter-console": "~1.2.1",
-    "chai": "~1.9.1",
-    "projectz": "~0.3.11"
-  },
-  "directories": {
-    "lib": "./out/lib"
+    "assert-helpers": "^4.9.6",
+    "chai": "~4.2.0",
+    "coffeelint": "^2.1.0",
+    "coffeescript": "^2.4.1",
+    "kava": "^3.1.0",
+    "projectz": "^1.7.4",
+    "valid-directory": "^1.0.0"
   },
   "scripts": {
-    "test": "node ./out/test/getmembers-test.js"
+    "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
+    "our:compile": "npm run our:compile:edition-esnext",
+    "our:compile:edition-esnext": "coffee -bco ./edition-esnext ./source",
+    "our:deploy": "echo no need for this project",
+    "our:meta": "npm run our:meta:projectz",
+    "our:meta:projectz": "projectz compile",
+    "our:release": "npm run our:release:prepare && npm run our:release:check-changelog && npm run our:release:check-dirty && npm run our:release:tag && npm run our:release:push",
+    "our:release:check-changelog": "cat ./HISTORY.md | grep v$npm_package_version || (echo add a changelog entry for v$npm_package_version && exit -1)",
+    "our:release:check-dirty": "git diff --exit-code",
+    "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
+    "our:release:push": "git push origin master && git push origin --tags",
+    "our:release:tag": "export MESSAGE=$(cat ./HISTORY.md | sed -n \"/## v$npm_package_version/,/##/p\" | sed 's/## //' | awk 'NR>1{print buf}{buf = $0}') && test \"$MESSAGE\" || (echo 'proper changelog entry not found' && exit -1) && git tag v$npm_package_version -am \"$MESSAGE\"",
+    "our:setup": "npm run our:setup:install",
+    "our:setup:install": "npm install",
+    "our:test": "npm run our:verify && npm test",
+    "our:verify": "npm run our:verify:coffeelint && npm run our:verify:directory",
+    "our:verify:coffeelint": "coffeelint ./source",
+    "our:verify:directory": "npx valid-directory",
+    "test": "node ./edition-esnext/test.js"
   },
-  "main": "./out/lib/getmembers.js"
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
+    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
+  ]
 }
