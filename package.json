@@ -89,7 +89,7 @@
   "dependencies": {
     "extendr": "^3.4.1",
     "extract-opts": "~3.3.1",
-    "feedr": "~3.0.0",
+    "feedr": "~4.3.0",
     "githubauthquerystring": "^1.0.2",
     "taskgroup": "~5.3.0",
     "typechecker": "~4.7.0"
