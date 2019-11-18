@@ -87,7 +87,7 @@
   ],
   "main": "edition-esnext/index.js",
   "dependencies": {
-    "extendr": "^3.4.1",
+    "extendr": "^4.0.0",
     "extract-opts": "~3.3.1",
     "feedr": "~3.0.0",
     "githubauthquerystring": "^1.0.2",
