@@ -95,7 +95,7 @@
     "typechecker": "~4.7.0"
   },
   "devDependencies": {
-    "assert-helpers": "^4.9.6",
+    "assert-helpers": "^5.4.0",
     "chai": "~4.2.0",
     "coffeelint": "^2.1.0",
     "coffeescript": "^2.4.1",
