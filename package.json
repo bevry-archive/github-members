@@ -92,7 +92,7 @@
     "feedr": "~3.0.0",
     "githubauthquerystring": "^2.0.0",
     "taskgroup": "~6.2.0",
-    "typechecker": "~5.0.0"
+    "typechecker": "~5.1.0"
   },
   "devDependencies": {
     "assert-helpers": "^5.4.0",
