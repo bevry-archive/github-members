@@ -1,6 +1,7 @@
 # Import
-{expect} = require('chai')
+{equal, nullish} = require('assert-helpers')
 kava = require('kava')
+Getter = require('./')
 
 # Test
 kava.suite 'getmembers', (suite,test) ->
@@ -8,17 +9,16 @@ kava.suite 'getmembers', (suite,test) ->
 
 	# Create our contributors instance
 	test 'create', ->
-		getter = require('./').create()
+		getter = Getter.create()
 
 	# Fetch all the contributors on these github
 	suite 'members', (suite,test) ->
 		test 'fetch', (done) ->
 			getter.fetchMembersFromOrgs ['browserstate', 'interconnectapp'], (err) ->
-				expect(err).to.be.null
+				nullish(err)
 				return done()
 
 		test 'combined result', ->
 			result = getter.getMembers()
-			console.log result
-			expect(result).to.be.an('array')
-			expect(result.length).to.not.equal(0)
+			equal(Array.isArray(result), true, 'is array')
+			equal(result.length > 0, true, 'have positive length')

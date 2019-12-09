@@ -4,6 +4,8 @@ extendr = require('extendr')
 {TaskGroup} = require('taskgroup')
 extractOptsAndCallback = require('extract-opts')
 githubAuthQueryString = require('githubauthquerystring').fetch()
+Feedr = require('feedr')
+ghapi = process.env.GITHUB_API or 'https://api.github.com'
 
 # Getter
 class Getter
@@ -22,7 +24,7 @@ class Getter
 		@config ?= opts
 
 		# Feedr
-		@feedr = new (require('feedr').Feedr)(@config)
+		@feedr = new Feedr(@config)
 
 		# Chain
 		@
@@ -210,7 +212,7 @@ class Getter
 		@log 'debug', 'Get members from org:', org
 
 		# Fetch the org's users
-		feedr.readFeed "https://api.github.com/orgs/#{org}/public_members?per_page=100&#{githubAuthQueryString}", Object.assign({parse:'json', opts}), (err,users) ->
+		feedr.readFeed "#{ghapi}/orgs/#{org}/public_members?per_page=100&#{githubAuthQueryString}", Object.assign({parse:'json', opts}), (err,users) ->
 			# Check
 			return next(err, [])  if err
 			return next(null, [])  unless users?.length

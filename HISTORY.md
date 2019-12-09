@@ -1,5 +1,10 @@
 # History
 
+## v2.1.0 2019 December 9
+
+-   Implemented support for `GITHUB_API` environment variable to access the GitHub API via a proxy
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+
 ## v2.0.0 2019 September 10
 
 -   Now uses [githubauthquerystring](https://github.com/bevry/githubauthquerystring) for github auth query string, instead of the configuration object

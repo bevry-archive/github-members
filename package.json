@@ -1,7 +1,7 @@
 {
   "title": "Get Members",
   "name": "getmembers",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Fetch all the members of all the specified github organisations with their complete details",
   "homepage": "https://github.com/bevry/getmembers",
   "license": "MIT",
@@ -23,11 +23,10 @@
       "daviddm",
       "daviddmdev",
       "---",
+      "githubsponsors",
       "patreon",
       "flattr",
       "liberapay",
-      "thanksapp",
-      "boostlab",
       "buymeacoffee",
       "opencollective",
       "crypto",
@@ -35,6 +34,7 @@
       "wishlist"
     ],
     "config": {
+      "githubSponsorsUsername": "balupton",
       "buymeacoffeeUsername": "balupton",
       "cryptoURL": "https://bevry.me/crypto",
       "flattrUsername": "balupton",
@@ -42,12 +42,19 @@
       "opencollectiveUsername": "bevry",
       "patreonUsername": "bevry",
       "paypalURL": "https://bevry.me/paypal",
-      "wishlistURL": "https://bevry.me/wishlist"
+      "wishlistURL": "https://bevry.me/wishlist",
+      "travisTLD": "com"
     }
   },
+  "funding": "https://bevry.me/fund",
   "author": "2014+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
+  ],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
+    "Rob Loach <robloach@gmail.com> (http://robloach.net)",
+    "dependabot-preview[bot] (http://github.com/apps/dependabot-preview)"
   ],
   "bugs": {
     "url": "https://github.com/bevry/getmembers/issues"
@@ -80,28 +87,27 @@
         "require"
       ],
       "engines": {
-        "node": "8 || 10 || 11 || 12",
-        "browsers": false
+        "node": "8 || 10 || 12 || 13"
       }
     }
   ],
+  "type": "commonjs",
   "main": "edition-esnext/index.js",
   "dependencies": {
-    "extendr": "^4.0.0",
-    "extract-opts": "~4.2.0",
-    "feedr": "~3.0.0",
-    "githubauthquerystring": "^2.0.0",
-    "taskgroup": "~6.4.0",
+    "extendr": "^4.3.0",
+    "extract-opts": "~4.3.0",
+    "feedr": "~4.8.0",
+    "githubauthquerystring": "^2.2.0",
+    "taskgroup": "^6.4.0",
     "typechecker": "~6.2.0"
   },
   "devDependencies": {
-    "assert-helpers": "^5.4.0",
-    "chai": "~4.2.0",
+    "assert-helpers": "^5.8.0",
     "coffeelint": "^2.1.0",
     "coffeescript": "^2.4.1",
-    "kava": "^4.1.0",
-    "projectz": "^1.7.4",
-    "valid-directory": "^1.0.0"
+    "kava": "^4.3.0",
+    "projectz": "^1.15.0",
+    "valid-directory": "^1.5.0"
   },
   "scripts": {
     "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
@@ -123,9 +129,5 @@
     "our:verify:coffeelint": "coffeelint ./source",
     "our:verify:directory": "npx valid-directory",
     "test": "node ./edition-esnext/test.js"
-  },
-  "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
-    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
-  ]
+  }
 }
