@@ -1,5 +1,14 @@
 # History
 
+## v4.0.0 2020 May 21
+
+-   Breaking Change: API has been rewritten to take advantage of many ecosystem improvements
+-   Converted from CoffeeScript to TypeScript
+-   Now uses the [`fellow` package](https://github.com/bevry/fellow) instead of doing that magic ourself
+-   Now updated for the [`githubauthreq` package](https://github.com/bevry/githubauthreq) to ensure github requests are authenticated
+-   Adds support for the `GITHUB_API` env variable, in case you wish to use a proxy for pagination and rate limiting improvements
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+
 ## v3.0.0 2020 May 6
 
 -   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)

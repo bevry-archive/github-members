@@ -35,39 +35,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ## Usage
 
-```javascript
-// Create our getmembers instance
-var getter = require('getmembers').create({
-    /* options to be passed to feedr */
-})
-
-// Fetch all the members on these github orgs
-getter.fetchMembersFromOrgs(['bevry'], function(err, members) {
-    // Fetch the direct results
-    console.log(err, members)
-
-    // Get the combined listing
-    console.log(getter.getMembers())
-})
-```
-
-Contributors are returned as an array of contributor objects, here is an example contributor object:
-
-```javascript
-{
-	name: "Benjamin Lupton",
-	email: "b@lupton.cc",
-	url: "https://github.com/balupton",
-	username: "balupton",
-	text: "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-	orgs: {
-		"bevry": "https://github.com/bevry"
-	},
-	profile: {
-		// https://api.github.com/users/balupton
-	}
-}
-```
+[Complete API Documentation.](http://master.getmembers.bevry.surge.sh/docs/globals.html)
 
 <!-- INSTALL/ -->
 
@@ -80,13 +48,38 @@ Contributors are returned as an array of contributor objects, here is an example
 <li>Require: <code>const pkg = require('getmembers')</code></li>
 </ul>
 
+<a href="https://www.pika.dev/cdn" title="100% Native ES Modules CDN"><h3>pika</h3></a>
+
+``` html
+<script type="module">
+    import * as pkg from '//cdn.pika.dev/getmembers/^4.0.0'
+</script>
+```
+
+<a href="https://unpkg.com" title="unpkg is a fast, global content delivery network for everything on npm"><h3>unpkg</h3></a>
+
+``` html
+<script type="module">
+    import * as pkg from '//unpkg.com/getmembers@^4.0.0'
+</script>
+```
+
+<a href="https://jspm.io" title="Native ES Modules CDN"><h3>jspm</h3></a>
+
+``` html
+<script type="module">
+    import * as pkg from '//dev.jspm.io/getmembers@4.0.0'
+</script>
+```
+
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>getmembers/source/index.coffee</code> is <a href="https://coffeescript.org" title="CoffeeScript is a little language that compiles into JavaScript">CoffeeScript</a> source code with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
+<ul><li><code>getmembers/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
+<li><code>getmembers/edition-browsers/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#10th_Edition_-_ECMAScript_2019" title="ECMAScript ES2019">ES2019</a> for web browsers with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
 <li><code>getmembers</code> aliases <code>getmembers/edition-esnext/index.js</code></li>
-<li><code>getmembers/edition-esnext/index.js</code> is <a href="https://coffeescript.org" title="CoffeeScript is a little language that compiles into JavaScript">CoffeeScript</a> compiled for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
+<li><code>getmembers/edition-esnext/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
 
 <!-- /INSTALL -->
 
@@ -117,7 +110,7 @@ Contributors are returned as an array of contributor objects, here is an example
 
 These amazing people are maintaining this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/getmembers/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/getmembers">view contributions</a></li></ul>
+<ul><li><a href="https://github.com/balupton">Benjamin Lupton</a> — <a href="https://github.com/bevry/getmembers/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/getmembers">view contributions</a></li></ul>
 
 <h3>Sponsors</h3>
 
@@ -137,9 +130,8 @@ No sponsors yet! Will you be the first?
 
 These amazing people have contributed code to this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/getmembers/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/getmembers">view contributions</a></li>
-<li><a href="http://robloach.net">Rob Loach</a> — <a href="https://github.com/bevry/getmembers/commits?author=RobLoach" title="View the GitHub contributions of Rob Loach on repository bevry/getmembers">view contributions</a></li>
-<li><a href="http://github.com/apps/dependabot-preview">dependabot-preview[bot]</a> — <a href="https://github.com/bevry/getmembers/commits?author=dependabot-preview[bot]" title="View the GitHub contributions of dependabot-preview[bot] on repository bevry/getmembers">view contributions</a></li></ul>
+<ul><li><a href="https://github.com/balupton">Benjamin Lupton</a> — <a href="https://github.com/bevry/getmembers/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/getmembers">view contributions</a></li>
+<li><a href="https://github.com/RobLoach">Rob Loach</a> — <a href="https://github.com/bevry/getmembers/commits?author=RobLoach" title="View the GitHub contributions of Rob Loach on repository bevry/getmembers">view contributions</a></li></ul>
 
 <a href="https://github.com/bevry/getmembers/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 

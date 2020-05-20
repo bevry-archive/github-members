@@ -1,24 +1,28 @@
-# Import
-{equal, nullish} = require('assert-helpers')
-kava = require('kava')
-Getter = require('./')
+// Import
+import { equal } from 'assert-helpers'
+import { suite, Errback } from 'kava'
+import * as getter from './'
+import { StrictUnion } from 'simplytyped'
 
-# Test
-kava.suite 'getmembers', (suite,test) ->
-	getter = null
+function long(result: StrictUnion<Set<getter.Fellow> | Array<getter.Fellow>>) {
+	const size = result.size || result.length || 0
+	equal(size > 0, true, `more than one result, it had ${size}`)
+}
 
-	# Create our contributors instance
-	test 'create', ->
-		getter = Getter.create()
+function check(done: Errback, log: boolean = false) {
+	return function (result: any) {
+		if (log) console.log(result)
+		long(result)
+		setImmediate(done)
+	}
+}
 
-	# Fetch all the contributors on these github
-	suite 'members', (suite,test) ->
-		test 'fetch', (done) ->
-			getter.fetchMembersFromOrgs ['browserstate', 'interconnectapp'], (err) ->
-				nullish(err)
-				return done()
-
-		test 'combined result', ->
-			result = getter.getMembers()
-			equal(Array.isArray(result), true, 'is array')
-			equal(result.length > 0, true, 'have positive length')
+// Test
+suite('getmembers', function (suite, test) {
+	test('orgs', function (done) {
+		getter
+			.getMembersFromOrgs(['browserstate', 'interconnectapp'])
+			.then(check(done))
+			.catch(done)
+	})
+})
