@@ -52,7 +52,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ``` html
 <script type="module">
-    import * as pkg from '//cdn.pika.dev/getmembers/^4.1.0'
+    import * as pkg from '//cdn.pika.dev/getmembers/^4.2.0'
 </script>
 ```
 
@@ -60,7 +60,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ``` html
 <script type="module">
-    import * as pkg from '//unpkg.com/getmembers@^4.1.0'
+    import * as pkg from '//unpkg.com/getmembers@^4.2.0'
 </script>
 ```
 
@@ -68,7 +68,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ``` html
 <script type="module">
-    import * as pkg from '//dev.jspm.io/getmembers@4.1.0'
+    import * as pkg from '//dev.jspm.io/getmembers@4.2.0'
 </script>
 ```
 
