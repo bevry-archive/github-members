@@ -5,7 +5,8 @@ import type { StrictUnion } from 'simplytyped'
 import fetch from 'cross-fetch'
 import Fellow from 'fellow'
 import { getHeaders } from 'githubauthreq'
-const ghapi = process.env.GITHUB_API || 'https://api.github.com'
+import { env } from 'process'
+const { GITHUB_API = 'https://api.github.com' } = env
 
 /** Collection of fellows */
 export type Fellows = Set<Fellow>
@@ -104,7 +105,7 @@ export async function getMemberProfile(url: string): Promise<GitHubProfile> {
 /** Fetch members from a GitHub organisation */
 export async function getMembersFromOrg(org: string): Promise<Fellows> {
 	// Fetch
-	const url = `${ghapi}/orgs/${org}/public_members?per_page=100`
+	const url = `${GITHUB_API}/orgs/${org}/public_members?per_page=100`
 	const resp = await fetch(url, {
 		headers: getHeaders(),
 	})
