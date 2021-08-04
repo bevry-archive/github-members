@@ -1,15 +1,15 @@
 <!-- TITLE/ -->
 
-<h1>Get Members</h1>
+<h1>GitHub Members</h1>
 
 <!-- /TITLE -->
 
 
 <!-- BADGES/ -->
 
-<span class="badge-travisci"><a href="http://travis-ci.com/bevry/getmembers" title="Check this project's build status on TravisCI"><img src="https://img.shields.io/travis/com/bevry/getmembers/master.svg" alt="Travis CI Build Status" /></a></span>
-<span class="badge-npmversion"><a href="https://npmjs.org/package/getmembers" title="View this project on NPM"><img src="https://img.shields.io/npm/v/getmembers.svg" alt="NPM version" /></a></span>
-<span class="badge-npmdownloads"><a href="https://npmjs.org/package/getmembers" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/getmembers.svg" alt="NPM downloads" /></a></span>
+<span class="badge-githubworkflow"><a href="https://github.com/bevry/getmembers/actions?query=workflow%3Abevry" title="View the status of this project's GitHub Workflow: bevry"><img src="https://github.com/bevry/getmembers/workflows/bevry/badge.svg" alt="Status of the GitHub Workflow: bevry" /></a></span>
+<span class="badge-npmversion"><a href="https://npmjs.org/package/@bevry/github-members" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@bevry/github-members.svg" alt="NPM version" /></a></span>
+<span class="badge-npmdownloads"><a href="https://npmjs.org/package/@bevry/github-members" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@bevry/github-members.svg" alt="NPM downloads" /></a></span>
 <span class="badge-daviddm"><a href="https://david-dm.org/bevry/getmembers" title="View the status of this project's dependencies on DavidDM"><img src="https://img.shields.io/david/bevry/getmembers.svg" alt="Dependency Status" /></a></span>
 <span class="badge-daviddmdev"><a href="https://david-dm.org/bevry/getmembers#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/bevry/getmembers.svg" alt="Dev Dependency Status" /></a></span>
 <br class="badge-separator" />
@@ -28,14 +28,20 @@
 
 <!-- DESCRIPTION/ -->
 
-Fetch all the members of all the specified github organisations with their complete details
+Fetch all the members of all the specified github organizations with their complete details
 
 <!-- /DESCRIPTION -->
 
 
 ## Usage
 
-[Complete API Documentation.](http://master.getmembers.bevry.surge.sh/docs/globals.html)
+[Complete API Documentation.](http://master.github-members.bevry.surge.sh/docs/)
+
+```javascript
+import { getMembersFromOrg, getMembersFromOrgs } from '@bevry/github-members'
+getMembersFromOrg('bevry').then(console.log).catch(console.error)
+getMembersFromOrgs(['bevry']).then(console.log).catch(console.error)
+```
 
 <!-- INSTALL/ -->
 
@@ -43,16 +49,16 @@ Fetch all the members of all the specified github organisations with their compl
 
 <a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
 <ul>
-<li>Install: <code>npm install --save getmembers</code></li>
-<li>Import: <code>import * as pkg from ('getmembers')</code></li>
-<li>Require: <code>const pkg = require('getmembers')</code></li>
+<li>Install: <code>npm install --save @bevry/github-members</code></li>
+<li>Import: <code>import * as pkg from ('@bevry/github-members')</code></li>
+<li>Require: <code>const pkg = require('@bevry/github-members')</code></li>
 </ul>
 
 <a href="https://www.skypack.dev" title="Skypack is a JavaScript Delivery Network for modern web apps"><h3>Skypack</h3></a>
 
 ``` html
 <script type="module">
-    import * as pkg from '//cdn.skypack.dev/getmembers@^4.14.0'
+    import * as pkg from '//cdn.skypack.dev/@bevry/github-members@^5.0.0'
 </script>
 ```
 
@@ -60,7 +66,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ``` html
 <script type="module">
-    import * as pkg from '//unpkg.com/getmembers@^4.14.0'
+    import * as pkg from '//unpkg.com/@bevry/github-members@^5.0.0'
 </script>
 ```
 
@@ -68,7 +74,7 @@ Fetch all the members of all the specified github organisations with their compl
 
 ``` html
 <script type="module">
-    import * as pkg from '//dev.jspm.io/getmembers@4.14.0'
+    import * as pkg from '//dev.jspm.io/@bevry/github-members@5.0.0'
 </script>
 ```
 
@@ -76,11 +82,11 @@ Fetch all the members of all the specified github organisations with their compl
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>getmembers/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
-<li><code>getmembers/edition-browsers/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#10th_Edition_-_ECMAScript_2019" title="ECMAScript ES2019">ES2019</a> for web browsers with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
-<li><code>getmembers</code> aliases <code>getmembers/edition-esnext/index.js</code></li>
-<li><code>getmembers/edition-esnext/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 10 || 12 || 14 || 15 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
-<li><code>getmembers/edition-esnext-esm/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 12 || 14 || 15 with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li></ul>
+<ul><li><code>@bevry/github-members/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
+<li><code>@bevry/github-members/edition-browsers/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#11th_Edition_–_ECMAScript_2020" title="ECMAScript ES2020">ES2020</a> for web browsers with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
+<li><code>@bevry/github-members</code> aliases <code>@bevry/github-members/edition-es2019/index.js</code></li>
+<li><code>@bevry/github-members/edition-es2019/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#10th_Edition_-_ECMAScript_2019" title="ECMAScript ES2019">ES2019</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 10 || 12 || 14 || 16 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
+<li><code>@bevry/github-members/edition-es2019-esm/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#10th_Edition_-_ECMAScript_2019" title="ECMAScript ES2019">ES2019</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 12 || 14 || 16 with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li></ul>
 
 <!-- /INSTALL -->
 

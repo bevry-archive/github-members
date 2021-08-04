@@ -1,12 +1,10 @@
 /* eslint camelcase:0 */
 
-// Import
+// external
 import type { StrictUnion } from 'simplytyped'
-import fetch from 'cross-fetch'
 import Fellow from 'fellow'
-import { getHeaders } from 'githubauthreq'
-import { env } from 'process'
-const { GITHUB_API = 'https://api.github.com' } = env
+import Pool from 'native-promise-pool'
+import { query, GitHubCredentials } from '@bevry/github-api'
 
 /** Collection of fellows */
 export type Fellows = Set<Fellow>
@@ -20,7 +18,7 @@ interface GitHubError {
 }
 
 /**
- * GitHub's response to getting a members of an organisation
+ * GitHub's response to getting a members of an organization
  * https://developer.github.com/v3/orgs/members/#members-list
  */
 export interface GitHubMember {
@@ -86,45 +84,65 @@ export interface GitHubProfile {
 }
 export type GitHubProfileResponse = StrictUnion<GitHubError | GitHubProfile>
 
-/** Fetch the full profile information for a member */
-export async function getMemberProfile(url: string): Promise<GitHubProfile> {
-	const resp = await fetch(url, {
-		headers: getHeaders(),
+/**
+ * Fetch the full profile information for a member
+ * @param url the complete API url to fetch the details for the member
+ * @param credentials custom github credentials, omit to use the environment variables
+ */
+export async function getMemberProfile(
+	url: string,
+	credentials?: GitHubCredentials
+): Promise<GitHubProfile> {
+	const resp = await query({
+		url,
+		userAgent: '@bevry/github-members',
+		credentials,
 	})
-	const responseData = (await resp.json()) as GitHubProfileResponse
+	const data: GitHubProfileResponse = await resp.json()
 
 	// Check
-	if (responseData.message) {
-		return Promise.reject(new Error(responseData.message))
+	if (data.message) {
+		return Promise.reject(new Error(data.message))
 	}
 
 	// Return
-	return responseData as GitHubProfile
+	return data as GitHubProfile
 }
 
-/** Fetch members from a GitHub organisation */
-export async function getMembersFromOrg(org: string): Promise<Fellows> {
+/**
+ * Fetch members from a GitHub organization
+ * @param org the org to fetch the members for, e.g. `"bevry"`
+ * @param credentials custom github credentials, omit to use the environment variables
+ */
+export async function getMembersFromOrg(
+	org: string,
+	credentials?: GitHubCredentials
+): Promise<Fellows> {
 	// Fetch
-	const url = `${GITHUB_API}/orgs/${org}/public_members?per_page=100`
-	const resp = await fetch(url, {
-		headers: getHeaders(),
+	const resp = await query({
+		pathname: `orgs/${org}/public_members`,
+		searchParams: {
+			per_page: '100',
+		},
+		userAgent: '@bevry/github-members',
+		credentials,
 	})
-	const responseData = (await resp.json()) as GitHubMembersResponse
+	const data: GitHubMembersResponse = await resp.json()
 
 	// Check
-	if (responseData.message) {
-		return Promise.reject(new Error(responseData.message))
-	} else if (!Array.isArray(responseData)) {
+	if (data.message) {
+		return Promise.reject(new Error(data.message))
+	} else if (!Array.isArray(data)) {
 		return Promise.reject(new Error('response was not an array of members'))
-	} else if (responseData.length === 0) {
+	} else if (data.length === 0) {
 		return new Set<Fellow>()
 	}
 
 	// Process
 	return new Set<Fellow>(
 		await Promise.all(
-			responseData.map(async function (contributor) {
-				const profile = await getMemberProfile(contributor.url)
+			data.map(async function (contributor) {
+				const profile = await getMemberProfile(contributor.url, credentials)
 				const fellow = Fellow.ensure({
 					githubProfile: profile,
 					name: profile.name,
@@ -144,11 +162,21 @@ export async function getMembersFromOrg(org: string): Promise<Fellows> {
 	)
 }
 
-/** Fetch members from GitHub organisations with duplicates removed */
+/**
+ * Fetch members from GitHub organizations with duplicates removed
+ * @param org the orgs to fetch the members for, e.g. `["bevry", "browserstate"]`
+ * @param concurrency custom concurrency to use, defaults to `0` which is infinite
+ * @param credentials custom github credentials, omit to use the environment variables
+ */
 export async function getMembersFromOrgs(
-	orgs: Array<string>
+	orgs: Array<string>,
+	concurrency: number = 0,
+	credentials?: GitHubCredentials
 ): Promise<Fellows> {
+	const pool = new Pool(concurrency)
 	return Fellow.flatten(
-		await Promise.all(orgs.map((org) => getMembersFromOrg(org)))
+		await Promise.all(
+			orgs.map((org) => pool.open(() => getMembersFromOrg(org, credentials)))
+		)
 	)
 }
