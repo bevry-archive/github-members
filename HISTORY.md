@@ -1,5 +1,10 @@
 # History
 
+## v5.1.0 2021 August 5
+
+-   Formalize `concurrency` within `MultiOpts`
+-   Iterate/support pages on contributors
+
 ## v5.0.0 2021 August 5
 
 -   Renamed to `@bevry/github-members`

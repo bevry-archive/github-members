@@ -1,7 +1,7 @@
 {
   "title": "GitHub Members",
   "name": "@bevry/github-members",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Fetch all the members of all the specified github organizations with their complete details",
   "homepage": "https://github.com/bevry/getmembers",
   "license": "MIT",
@@ -149,6 +149,7 @@
   "module": "edition-browsers/index.js",
   "dependencies": {
     "@bevry/github-api": "^9.0.0",
+    "@bevry/list": "^1.7.0",
     "fellow": "^6.24.0",
     "native-promise-pool": "^3.19.0",
     "simplytyped": "^3.3.0"
