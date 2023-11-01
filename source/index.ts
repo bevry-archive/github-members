@@ -107,14 +107,14 @@ export type GitHubProfileResponse = StrictUnion<GitHubError | GitHubProfile>
  */
 export async function getMemberProfile(
 	url: string,
-	credentials?: GitHubCredentials
+	credentials?: GitHubCredentials,
 ): Promise<GitHubProfile> {
 	const resp = await query({
 		url,
 		userAgent: '@bevry/github-members',
 		credentials,
 	})
-	const data: GitHubProfileResponse = await resp.json()
+	const data = (await resp.json()) as GitHubProfileResponse
 
 	// Check
 	if (data.message) {
@@ -132,7 +132,7 @@ export async function getMemberProfile(
  */
 export async function getMember(
 	url: string,
-	credentials?: GitHubCredentials
+	credentials?: GitHubCredentials,
 ): Promise<Fellow> {
 	const profile = await getMemberProfile(url, credentials)
 	const fellow = Fellow.ensure({
@@ -160,7 +160,7 @@ export async function getMember(
 export async function getMembersFromOrg(
 	org: string,
 	opts: MultiOptions = {},
-	credentials?: GitHubCredentials
+	credentials?: GitHubCredentials,
 ): Promise<Fellows> {
 	// defaults
 	if (opts.page == null) opts.page = 1
@@ -178,7 +178,7 @@ export async function getMembersFromOrg(
 		userAgent: '@bevry/github-members',
 		credentials,
 	})
-	const data: GitHubMembersResponse = await resp.json()
+	const data = (await resp.json()) as GitHubMembersResponse
 
 	// prepare
 	const results: Fellows = new Set<Fellow>()
@@ -195,9 +195,9 @@ export async function getMembersFromOrg(
 		results,
 		await Promise.all(
 			data.map((contributor) =>
-				pool.open(() => getMember(contributor.url, credentials))
-			)
-		)
+				pool.open(() => getMember(contributor.url, credentials)),
+			),
+		),
 	)
 
 	// add next items
@@ -212,8 +212,8 @@ export async function getMembersFromOrg(
 					...opts,
 					page: opts.page + 1,
 				},
-				credentials
-			)
+				credentials,
+			),
 		)
 
 	// return it all
@@ -229,14 +229,14 @@ export async function getMembersFromOrg(
 export async function getMembersFromOrgs(
 	orgs: Array<string>,
 	opts: MultiOptions = {},
-	credentials?: GitHubCredentials
+	credentials?: GitHubCredentials,
 ): Promise<Fellows> {
 	const pool = new Pool(opts.concurrency)
 	return Fellow.flatten(
 		await Promise.all(
 			orgs.map((org) =>
-				pool.open(() => getMembersFromOrg(org, opts, credentials))
-			)
-		)
+				pool.open(() => getMembersFromOrg(org, opts, credentials)),
+			),
+		),
 	)
 }
