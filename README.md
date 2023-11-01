@@ -57,7 +57,7 @@ getMembersFromOrgs(['bevry']).then(console.log).catch(console.error)
 
 ``` html
 <script type="module">
-    import * as pkg from '//cdn.skypack.dev/@bevry/github-members@^6.0.0'
+    import * as pkg from '//cdn.skypack.dev/@bevry/github-members@^6.1.0'
 </script>
 ```
 
@@ -65,7 +65,7 @@ getMembersFromOrgs(['bevry']).then(console.log).catch(console.error)
 
 ``` html
 <script type="module">
-    import * as pkg from '//unpkg.com/@bevry/github-members@^6.0.0'
+    import * as pkg from '//unpkg.com/@bevry/github-members@^6.1.0'
 </script>
 ```
 
@@ -73,7 +73,7 @@ getMembersFromOrgs(['bevry']).then(console.log).catch(console.error)
 
 ``` html
 <script type="module">
-    import * as pkg from '//dev.jspm.io/@bevry/github-members@6.0.0'
+    import * as pkg from '//dev.jspm.io/@bevry/github-members@6.1.0'
 </script>
 ```
 
